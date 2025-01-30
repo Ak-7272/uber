@@ -1,19 +1,20 @@
 const express = require('express');
-const router = express.router();
+const router = express.Router();
 
 const {body}=require ('express-validator')
 const userController = require('../controllers/user.controller')
 
 router.post('/register',[
-    body('fullname.firstname').notEmpty().withMessage('First Name is required'),
-   
-    body('email').isEmail().withMessage('Please enter a valid email'),
-    body('password').isLength({min:6}).withMessage('Password must be at least 6 characters long'),
-    body('password').matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*/, 'Your password must contain at least one number, one lowercase and one uppercase letter').withMessage('Password must contain at least one number, one lowercase and one uppercase letter'),
-
-    userController.registerUser // it is passed as a user controller 
-])
-
+    body("fullname.firstname").notEmpty().withMessage("First name is required"),
+    body("fullname.lastname").notEmpty().withMessage("Last name is required"),
+    body("email").isEmail().withMessage("Invalid email address"),
+    body("password")
+      .isLength({ min: 6 }).withMessage("Password must be at least 6 characters long")
+      .matches(/^(?=.*[A-Za-z])(?=.*\d)/)
+      .withMessage("Password must contain at least one letter and one number"),
+    userController.registerUser
+  ])
+ 
 
 
 
