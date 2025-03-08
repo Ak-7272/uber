@@ -30,7 +30,7 @@ const UserLogin = () => {
     }
 
 
-    const response = await axios.post(`http://localhost:5000/users/login`, userData)
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}`, userData)
 
     if (response.status === 200) {
       const data = response.data
