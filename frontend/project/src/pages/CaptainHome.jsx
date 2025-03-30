@@ -8,6 +8,10 @@ import gsap from 'gsap'
 import { useEffect, useContext } from 'react'
 import axios from 'axios'
 
+import { SocketContext } from '../context/SocketContext'
+import { CaptainDataContext } from '../context/CaptainContext'
+
+
 const CaptainHome = () => {
 
     const [ ridePopupPanel, setRidePopupPanel ] = useState(true)
@@ -18,6 +22,17 @@ const CaptainHome = () => {
     const [ ride, setRide ] = useState(null)
 
    
+    const { socket } = useContext(SocketContext)
+    const { captain } = useContext(CaptainDataContext)
+
+
+    useEffect(() => {
+        console.log(captain)
+        socket.emit("join", {
+            userId: captain._id,
+            userType: "captain"
+        })
+    }, [captain]) 
    
 
     // useEffect(() => {
